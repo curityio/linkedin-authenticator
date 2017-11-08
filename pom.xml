@@ -67,14 +67,14 @@
             <version>1.7.22</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0-rc2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.curity.identityserver.plugin</groupId>
+            <artifactId>identityserver.plugins.authenticators</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
@@ -85,11 +85,6 @@
             <name>Curity Nexus Release Repository</name>
             <url>https://nexus.curity.se/nexus/content/repositories/twobo-release-repo/</url>
         </repository>
-        <snapshotRepository>
-            <id>curity-snapshot-repo</id>
-            <name>Curity Nexus Snapshot Repository</name>
-            <url>https://nexus.curity.se/nexus/content/repositories/twobo-snapshot-repo/</url>
-        </snapshotRepository>
     </distributionManagement>
 
 </project>

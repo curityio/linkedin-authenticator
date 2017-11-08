@@ -17,6 +17,8 @@
 package io.curity.identityserver.plugin.linkedin.authentication;
 
 import com.google.common.collect.ImmutableMap;
+import io.curity.identityserver.plugin.authentication.CodeFlowOAuthClient;
+import io.curity.identityserver.plugin.authentication.OAuthClient;
 import io.curity.identityserver.plugin.linkedin.config.LinkedInAuthenticatorPluginConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,7 @@ import se.curity.identityserver.sdk.web.Response;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.curity.identityserver.plugin.linkedin.config.Constants.Params.PARAM_REDIRECT_URI;
+import static io.curity.identityserver.plugin.authentication.Constants.Params.PARAM_REDIRECT_URI;
 
 public class LinkedInAuthenticatorRequestHandler implements AuthenticatorRequestHandler<RequestModel> {
     private static final Logger _logger = LoggerFactory.getLogger(LinkedInAuthenticatorRequestHandler.class);
@@ -44,7 +46,7 @@ public class LinkedInAuthenticatorRequestHandler implements AuthenticatorRequest
                                                Json json,
                                                AuthenticatorInformationProvider provider) {
         _config = config;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, config, provider, json);
+        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json);
     }
 
     @Override

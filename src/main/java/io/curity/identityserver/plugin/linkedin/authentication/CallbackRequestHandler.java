@@ -16,6 +16,8 @@
 
 package io.curity.identityserver.plugin.linkedin.authentication;
 
+import io.curity.identityserver.plugin.authentication.CodeFlowOAuthClient;
+import io.curity.identityserver.plugin.authentication.OAuthClient;
 import io.curity.identityserver.plugin.linkedin.config.LinkedInAuthenticatorPluginConfig;
 import se.curity.identityserver.sdk.authentication.AuthenticationResult;
 import se.curity.identityserver.sdk.authentication.AuthenticatorRequestHandler;
@@ -28,7 +30,7 @@ import se.curity.identityserver.sdk.web.Response;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.curity.identityserver.plugin.linkedin.config.Constants.Params.PARAM_ACCESS_TOKEN;
+import static io.curity.identityserver.plugin.authentication.Constants.Params.PARAM_ACCESS_TOKEN;
 
 public class CallbackRequestHandler
         implements AuthenticatorRequestHandler<CallbackGetRequestModel> {
@@ -41,7 +43,7 @@ public class CallbackRequestHandler
                                   Json json,
                                   LinkedInAuthenticatorPluginConfig config) {
         _exceptionFactory = exceptionFactory;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, config, provider, json);
+        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json);
         _config = config;
     }
 
@@ -62,7 +64,7 @@ public class CallbackRequestHandler
                 _config.getClientSecret(),
                 requestModel.getCode(),
                 requestModel.getState());
-        return _oauthClient.getAuthenticationResult(tokenMap.get(PARAM_ACCESS_TOKEN).toString());
+        return _oauthClient.getAuthenticationResult(tokenMap.get(PARAM_ACCESS_TOKEN).toString(), _config.getUserInfoEndpoint().toString());
     }
 
     @Override
