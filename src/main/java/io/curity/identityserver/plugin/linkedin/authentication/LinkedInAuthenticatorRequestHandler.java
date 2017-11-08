@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import se.curity.identityserver.sdk.authentication.AuthenticationResult;
 import se.curity.identityserver.sdk.authentication.AuthenticatorRequestHandler;
 import se.curity.identityserver.sdk.service.ExceptionFactory;
+import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.authentication.AuthenticatorInformationProvider;
 import se.curity.identityserver.sdk.web.Request;
 import se.curity.identityserver.sdk.web.Response;
@@ -40,9 +41,10 @@ public class LinkedInAuthenticatorRequestHandler implements AuthenticatorRequest
 
     public LinkedInAuthenticatorRequestHandler(LinkedInAuthenticatorPluginConfig config,
                                                ExceptionFactory exceptionFactory,
+                                               Json json,
                                                AuthenticatorInformationProvider provider) {
         _config = config;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, config, provider);
+        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, config, provider, json);
     }
 
     @Override

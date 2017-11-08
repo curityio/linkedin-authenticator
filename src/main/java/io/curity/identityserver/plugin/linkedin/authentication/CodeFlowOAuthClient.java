@@ -26,8 +26,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.jose4j.json.JsonUtil;
-import org.jose4j.lang.JoseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.curity.identityserver.sdk.Nullable;
@@ -39,6 +37,7 @@ import se.curity.identityserver.sdk.attribute.SubjectAttributes;
 import se.curity.identityserver.sdk.authentication.AuthenticationResult;
 import se.curity.identityserver.sdk.errors.ErrorCode;
 import se.curity.identityserver.sdk.service.ExceptionFactory;
+import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.authentication.AuthenticatorInformationProvider;
 import se.curity.identityserver.sdk.web.Response;
 
@@ -46,7 +45,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -63,14 +61,17 @@ public class CodeFlowOAuthClient implements OAuthClient {
     private final HttpClient _client;
     private final LinkedInAuthenticatorPluginConfig _config;
     private final AuthenticatorInformationProvider _provider;
+    private final Json _json;
 
     public CodeFlowOAuthClient(ExceptionFactory exceptionFactory,
                                LinkedInAuthenticatorPluginConfig config,
-                               AuthenticatorInformationProvider provider) {
+                               AuthenticatorInformationProvider provider,
+                               Json json) {
         _exceptionFactory = exceptionFactory;
         _client = HttpClientBuilder.create().build();
         _config = config;
         _provider = provider;
+        _json = json;
     }
 
     private String createState() {
@@ -96,8 +97,8 @@ public class CodeFlowOAuthClient implements OAuthClient {
         try {
             String jsonString = EntityUtils.toString(response.getEntity());
 
-            return JsonUtil.parseJson(jsonString);
-        } catch (JoseException | IOException e) {
+            return _json.fromJson(jsonString);
+        } catch (IOException e) {
             _logger.debug("Could not parse UserInfo", e);
 
             throw _exceptionFactory.internalServerException(ErrorCode.INVALID_SERVER_STATE, "Authentication failed");

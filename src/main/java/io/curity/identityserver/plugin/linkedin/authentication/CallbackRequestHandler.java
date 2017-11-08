@@ -20,6 +20,7 @@ import io.curity.identityserver.plugin.linkedin.config.LinkedInAuthenticatorPlug
 import se.curity.identityserver.sdk.authentication.AuthenticationResult;
 import se.curity.identityserver.sdk.authentication.AuthenticatorRequestHandler;
 import se.curity.identityserver.sdk.service.ExceptionFactory;
+import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.authentication.AuthenticatorInformationProvider;
 import se.curity.identityserver.sdk.web.Request;
 import se.curity.identityserver.sdk.web.Response;
@@ -37,9 +38,10 @@ public class CallbackRequestHandler
 
     public CallbackRequestHandler(ExceptionFactory exceptionFactory,
                                   AuthenticatorInformationProvider provider,
+                                  Json json,
                                   LinkedInAuthenticatorPluginConfig config) {
         _exceptionFactory = exceptionFactory;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, config, provider);
+        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, config, provider, json);
         _config = config;
     }
 
