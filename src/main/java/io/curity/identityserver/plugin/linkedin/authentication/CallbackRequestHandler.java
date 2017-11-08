@@ -43,7 +43,7 @@ public class CallbackRequestHandler
                                   Json json,
                                   LinkedInAuthenticatorPluginConfig config) {
         _exceptionFactory = exceptionFactory;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json);
+        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json, config.getSessionManager());
         _config = config;
     }
 

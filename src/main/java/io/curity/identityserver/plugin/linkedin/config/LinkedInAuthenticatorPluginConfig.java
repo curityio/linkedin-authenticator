@@ -20,6 +20,7 @@ import se.curity.identityserver.sdk.config.Configuration;
 import se.curity.identityserver.sdk.config.annotation.DefaultString;
 import se.curity.identityserver.sdk.config.annotation.DefaultURI;
 import se.curity.identityserver.sdk.config.annotation.Description;
+import se.curity.identityserver.sdk.service.SessionManager;
 
 import java.net.URI;
 
@@ -46,5 +47,7 @@ public interface LinkedInAuthenticatorPluginConfig extends Configuration {
     @Description("URL to the LinkedIn userinfo(profile) endpoint")
     @DefaultURI("https://api.linkedin.com/v1/people/~?format=json")
     URI getUserInfoEndpoint();
+
+    SessionManager getSessionManager();
 
 }

@@ -46,7 +46,7 @@ public class LinkedInAuthenticatorRequestHandler implements AuthenticatorRequest
                                                Json json,
                                                AuthenticatorInformationProvider provider) {
         _config = config;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json);
+        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json, config.getSessionManager());
     }
 
     @Override
