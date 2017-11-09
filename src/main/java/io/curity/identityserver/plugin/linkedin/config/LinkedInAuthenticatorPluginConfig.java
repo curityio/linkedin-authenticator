@@ -36,7 +36,7 @@ public interface LinkedInAuthenticatorPluginConfig extends Configuration {
     @DefaultURI("https://www.linkedin.com/oauth/v2/authorization")
     URI getAuthorizationEndpoint();
 
-    @Description("URL to the LinkedIn authorization endpoint")
+    @Description("URL to the LinkedIn token endpoint")
     @DefaultURI("https://www.linkedin.com/oauth/v2/accessToken")
     URI getTokenEndpoint();
 
