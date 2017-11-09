@@ -59,6 +59,8 @@ public class CallbackRequestHandler
     @Override
     public Optional<AuthenticationResult> get(CallbackGetRequestModel requestModel,
                                               Response response) {
+        _oauthClient.redirectToAuthenticationOnError(requestModel.getRequest(), _config.id());
+
         Map<String, Object> tokenMap = _oauthClient.getTokens(_config.getTokenEndpoint().toString(),
                 _config.getClientId(),
                 _config.getClientSecret(),

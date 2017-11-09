@@ -20,13 +20,13 @@ import se.curity.identityserver.sdk.web.Request;
 
 public class CallbackGetRequestModel {
     private String _code;
-    private String _url;
     private String _state;
+    private Request _request;
 
     public CallbackGetRequestModel(Request request) {
         _code = request.getParameterValueOrError("code");
         _state = request.getParameterValueOrError("state");
-        _url = request.getUrl();
+        _request = request;
     }
 
     public String getCode() {
@@ -37,7 +37,7 @@ public class CallbackGetRequestModel {
         return _state;
     }
 
-    public String getUrl() {
-        return _url;
+    public Request getRequest() {
+        return _request;
     }
 }
