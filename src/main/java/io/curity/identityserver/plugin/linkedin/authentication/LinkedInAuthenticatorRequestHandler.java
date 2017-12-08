@@ -19,6 +19,7 @@ package io.curity.identityserver.plugin.linkedin.authentication;
 import com.google.common.collect.ImmutableMap;
 import io.curity.identityserver.plugin.authentication.DefaultOAuthClient;
 import io.curity.identityserver.plugin.authentication.OAuthClient;
+import io.curity.identityserver.plugin.authentication.RequestModel;
 import io.curity.identityserver.plugin.linkedin.config.LinkedInAuthenticatorPluginConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
