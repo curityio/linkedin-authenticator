@@ -16,7 +16,7 @@
 
 package io.curity.identityserver.plugin.linkedin.authentication;
 
-import io.curity.identityserver.plugin.authentication.CodeFlowOAuthClient;
+import io.curity.identityserver.plugin.authentication.DefaultOAuthClient;
 import io.curity.identityserver.plugin.authentication.OAuthClient;
 import io.curity.identityserver.plugin.linkedin.config.LinkedInAuthenticatorPluginConfig;
 import se.curity.identityserver.sdk.authentication.AuthenticationResult;
@@ -43,7 +43,7 @@ public class CallbackRequestHandler
                                   Json json,
                                   LinkedInAuthenticatorPluginConfig config) {
         _exceptionFactory = exceptionFactory;
-        _oauthClient = new CodeFlowOAuthClient(exceptionFactory, provider, json, config.getSessionManager());
+        _oauthClient = new DefaultOAuthClient(exceptionFactory, provider, json, config.getSessionManager());
         _config = config;
     }
 
