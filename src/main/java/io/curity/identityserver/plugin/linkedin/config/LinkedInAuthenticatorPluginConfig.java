@@ -50,7 +50,7 @@ public interface LinkedInAuthenticatorPluginConfig extends Configuration
     @DefaultBoolean(false)
     boolean isShareAccess();
 
-    @Description("The HTTP client with any proxy and TLS settings that will be used to connect to slack")
+    @Description("The HTTP client with any proxy and TLS settings that will be used to connect to LinkedIn")
     Optional<HttpClient> getHttpClient();
 
     SessionManager getSessionManager();
