@@ -20,9 +20,15 @@ import se.curity.identityserver.sdk.config.Configuration;
 import se.curity.identityserver.sdk.config.annotation.DefaultString;
 import se.curity.identityserver.sdk.config.annotation.DefaultURI;
 import se.curity.identityserver.sdk.config.annotation.Description;
+import se.curity.identityserver.sdk.service.ExceptionFactory;
+import se.curity.identityserver.sdk.service.HttpClient;
+import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.SessionManager;
+import se.curity.identityserver.sdk.service.WebServiceClientFactory;
+import se.curity.identityserver.sdk.service.authentication.AuthenticatorInformationProvider;
 
 import java.net.URI;
+import java.util.Optional;
 
 @SuppressWarnings("InterfaceNeverImplemented")
 public interface LinkedInAuthenticatorPluginConfig extends Configuration {
@@ -48,6 +54,17 @@ public interface LinkedInAuthenticatorPluginConfig extends Configuration {
     @DefaultURI("https://api.linkedin.com/v1/people/~?format=json")
     URI getUserInfoEndpoint();
 
+    @Description("The HTTP client with any proxy and TLS settings that will be used to connect to slack")
+    Optional<HttpClient> getHttpClient();
+
     SessionManager getSessionManager();
+
+    ExceptionFactory getExceptionFactory();
+
+    AuthenticatorInformationProvider getAuthenticatorInformationProvider();
+
+    WebServiceClientFactory getWebServiceClientFactory();
+
+    Json getJson();
 
 }
