@@ -17,8 +17,7 @@
 package io.curity.identityserver.plugin.linkedin.config;
 
 import se.curity.identityserver.sdk.config.Configuration;
-import se.curity.identityserver.sdk.config.annotation.DefaultString;
-import se.curity.identityserver.sdk.config.annotation.DefaultURI;
+import se.curity.identityserver.sdk.config.annotation.DefaultBoolean;
 import se.curity.identityserver.sdk.config.annotation.Description;
 import se.curity.identityserver.sdk.service.ExceptionFactory;
 import se.curity.identityserver.sdk.service.HttpClient;
@@ -27,32 +26,29 @@ import se.curity.identityserver.sdk.service.SessionManager;
 import se.curity.identityserver.sdk.service.WebServiceClientFactory;
 import se.curity.identityserver.sdk.service.authentication.AuthenticatorInformationProvider;
 
-import java.net.URI;
 import java.util.Optional;
 
 @SuppressWarnings("InterfaceNeverImplemented")
-public interface LinkedInAuthenticatorPluginConfig extends Configuration {
-    @Description("client id")
+public interface LinkedInAuthenticatorPluginConfig extends Configuration
+{
+    @Description("Client ID of the LinkedIn app")
     String getClientId();
 
-    @Description("Secret key used for communication with linkedin")
+    @Description("Client Secret")
     String getClientSecret();
 
-    @Description("URL to the LinkedIn authorization endpoint")
-    @DefaultURI("https://www.linkedin.com/oauth/v2/authorization")
-    URI getAuthorizationEndpoint();
+    @Description("Request a scope (r_emailaddress) that grants access to manage primary email address you use for your LinkedIn account")
+    @DefaultBoolean(false)
+    boolean isReadEmailAddress();
 
-    @Description("URL to the LinkedIn token endpoint")
-    @DefaultURI("https://www.linkedin.com/oauth/v2/accessToken")
-    URI getTokenEndpoint();
 
-    @Description("A space-separated list of scopes to request from LinkedIn")
-    @DefaultString("")
-    String getScope();
+    @Description("Request a scope (rw_company_admin) that grants access to manage your company page and post updates")
+    @DefaultBoolean(false)
+    boolean isManageCompanyPage();
 
-    @Description("URL to the LinkedIn userinfo(profile) endpoint")
-    @DefaultURI("https://api.linkedin.com/v1/people/~?format=json")
-    URI getUserInfoEndpoint();
+    @Description("Request a scope (w_share) that grants access to post updates as you")
+    @DefaultBoolean(false)
+    boolean isShareAccess();
 
     @Description("The HTTP client with any proxy and TLS settings that will be used to connect to slack")
     Optional<HttpClient> getHttpClient();

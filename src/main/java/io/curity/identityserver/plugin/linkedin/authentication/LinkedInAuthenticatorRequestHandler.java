@@ -76,6 +76,21 @@ public class LinkedInAuthenticatorRequestHandler implements AuthenticatorRequest
         queryStringArguments.put("state", Collections.singleton(state));
         queryStringArguments.put("response_type", Collections.singleton("code"));
 
+        scopes.add("r_basicprofile");
+
+        if (_config.isReadEmailAddress())
+        {
+            scopes.add("r_emailaddress");
+        }
+        if (_config.isManageCompanyPage())
+        {
+            scopes.add("rw_company_admin");
+        }
+        if (_config.isShareAccess())
+        {
+            scopes.add("w_share");
+        }
+
         queryStringArguments.put("scope", Collections.singleton(String.join(" ", scopes)));
 
         _logger.debug("Redirecting to {} with query string arguments {}", AUTHORIZATION_ENDPOINT,
