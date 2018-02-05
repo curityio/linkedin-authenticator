@@ -6,7 +6,7 @@
 
     <groupId>io.curity.identityserver.plugin</groupId>
     <artifactId>identityserver.plugins.authenticators.linkedin</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
 
     <name>LinkedIn Authenticator</name>
 
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>se.curity.identityserver</groupId>
             <artifactId>identityserver.sdk</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
+            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -58,4 +58,17 @@
             </releases>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>customer-release-repo</id>
+            <name>Customer Release Repository</name>
+            <url>https://nexus.curity.se/nexus/content/repositories/customer-release-repo/</url>
+        </repository>
+        <snapshotRepository>
+            <id>curity-snapshot-repo</id>
+            <name>Curity Nexus Snapshot Repository</name>
+            <url>https://nexus.curity.se/nexus/content/repositories/customer-snapshot-repo/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
