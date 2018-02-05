@@ -47,10 +47,10 @@ public final class LinkedInAuthenticatorPluginDescriptor
     public Map<String, Class<? extends AuthenticatorRequestHandler<?>>> getAuthenticationRequestHandlerTypes()
     {
         Map<String, Class<? extends AuthenticatorRequestHandler<?>>> handlers = new LinkedHashMap<>(2);
+        
         handlers.put("index", LinkedInAuthenticatorRequestHandler.class);
         handlers.put(CALLBACK, CallbackRequestHandler.class);
 
         return Collections.unmodifiableMap(handlers);
     }
-
 }

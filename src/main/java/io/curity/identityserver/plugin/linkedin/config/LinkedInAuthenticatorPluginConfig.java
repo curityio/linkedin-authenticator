@@ -37,7 +37,8 @@ public interface LinkedInAuthenticatorPluginConfig extends Configuration
     @Description("Client Secret")
     String getClientSecret();
 
-    @Description("Request a scope (r_emailaddress) that grants access to manage primary email address you use for your LinkedIn account")
+    @Description("Request a scope (r_emailaddress) that grants access to manage primary email address you use for " +
+            "your LinkedIn account")
     @DefaultBoolean(false)
     boolean isReadEmailAddress();
 
