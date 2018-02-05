@@ -16,35 +16,41 @@
 
 package io.curity.identityserver.plugin.linkedin.descriptor;
 
-import com.google.common.collect.ImmutableMap;
 import io.curity.identityserver.plugin.linkedin.authentication.CallbackRequestHandler;
 import io.curity.identityserver.plugin.linkedin.authentication.LinkedInAuthenticatorRequestHandler;
 import io.curity.identityserver.plugin.linkedin.config.LinkedInAuthenticatorPluginConfig;
 import se.curity.identityserver.sdk.authentication.AuthenticatorRequestHandler;
 import se.curity.identityserver.sdk.plugin.descriptor.AuthenticatorPluginDescriptor;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class LinkedInAuthenticatorPluginDescriptor
-        implements AuthenticatorPluginDescriptor<LinkedInAuthenticatorPluginConfig> {
-    public final static String INDEX = "index";
+        implements AuthenticatorPluginDescriptor<LinkedInAuthenticatorPluginConfig>
+{
     public final static String CALLBACK = "callback";
 
     @Override
-    public String getPluginImplementationType() {
+    public String getPluginImplementationType()
+    {
         return "linkedin";
     }
 
     @Override
-    public Class<? extends LinkedInAuthenticatorPluginConfig> getConfigurationType() {
+    public Class<? extends LinkedInAuthenticatorPluginConfig> getConfigurationType()
+    {
         return LinkedInAuthenticatorPluginConfig.class;
     }
 
     @Override
-    public Map<String, Class<? extends AuthenticatorRequestHandler<?>>> getAuthenticationRequestHandlerTypes() {
-        return ImmutableMap.of(
-                INDEX, LinkedInAuthenticatorRequestHandler.class,
-                CALLBACK, CallbackRequestHandler.class);
+    public Map<String, Class<? extends AuthenticatorRequestHandler<?>>> getAuthenticationRequestHandlerTypes()
+    {
+        Map<String, Class<? extends AuthenticatorRequestHandler<?>>> handlers = new LinkedHashMap<>(2);
+        handlers.put("index", LinkedInAuthenticatorRequestHandler.class);
+        handlers.put(CALLBACK, CallbackRequestHandler.class);
+
+        return Collections.unmodifiableMap(handlers);
     }
 
 }
