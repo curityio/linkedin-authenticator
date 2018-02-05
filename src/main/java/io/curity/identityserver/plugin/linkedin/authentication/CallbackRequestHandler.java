@@ -76,7 +76,8 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         if (request.isGetRequest())
         {
             return new CallbackGetRequestModel(request);
-        } else
+        }
+        else
         {
             throw _exceptionFactory.methodNotAllowed();
         }
@@ -120,21 +121,26 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
 
         Map<String, Object> userData = _json.fromJson(userResponseData.body(HttpResponse.asString()));
 
-        List<Attribute> subjectAttributers = new ArrayList<>();
-        subjectAttributers.add(Attribute.of("first_name", Objects.toString(userData.get("firstName"))));
-        subjectAttributers.add(Attribute.of("last_name", Objects.toString(userData.get("lastName"))));
-        subjectAttributers.add(Attribute.of("id", Objects.toString(userData.get("id"))));
-        subjectAttributers.add(Attribute.of("headline", Objects.toString(userData.get("headline"))));
+        List<Attribute> subjectAttributes = new ArrayList<>();
+        
+        subjectAttributes.add(Attribute.of("first_name", Objects.toString(userData.get("firstName"))));
+        subjectAttributes.add(Attribute.of("last_name", Objects.toString(userData.get("lastName"))));
+        subjectAttributes.add(Attribute.of("id", Objects.toString(userData.get("id"))));
+        subjectAttributes.add(Attribute.of("headline", Objects.toString(userData.get("headline"))));
+
         if (userData.get("siteStandardProfileRequest") != null)
         {
-            subjectAttributers.add(Attribute.of("profile_url", Objects.toString(((Map) userData.get("siteStandardProfileRequest")).get("url"))));
+            subjectAttributes.add(Attribute.of("profile_url", Objects.toString(((Map) userData.get
+                    ("siteStandardProfileRequest")).get("url"))));
         }
 
         AuthenticationAttributes attributes = AuthenticationAttributes.of(
-                SubjectAttributes.of(userData.get("id").toString(), Attributes.of(subjectAttributers)),
-                ContextAttributes.of(Attributes.of(Attribute.of("linkedin_access_token", tokenResponseData.get("access_token").toString()))));
+                SubjectAttributes.of(userData.get("id").toString(), Attributes.of(subjectAttributes)),
+                ContextAttributes.of(Attributes.of(Attribute.of("linkedin_access_token", tokenResponseData.get
+                        ("access_token").toString()))));
         AuthenticationResult authenticationResult = new AuthenticationResult(attributes);
-        return Optional.ofNullable(authenticationResult);
+
+        return Optional.of(authenticationResult);
     }
 
     private Map<String, Object> redeemCodeForTokens(CallbackGetRequestModel requestModel)
@@ -170,7 +176,8 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         if (httpClient.isPresent())
         {
             return _webServiceClientFactory.create(httpClient.get()).withHost(host);
-        } else
+        }
+        else
         {
             return _webServiceClientFactory.create(URI.create("https://" + host));
         }
@@ -182,19 +189,22 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         {
             if ("access_denied".equals(requestModel.getError()))
             {
-                _logger.debug("Got an error from LinkedIn: {} - {}", requestModel.getError(), requestModel.getErrorDescription());
+                _logger.debug("Got an error from LinkedIn: {} - {}", requestModel.getError(), requestModel
+                        .getErrorDescription());
 
                 throw _exceptionFactory.redirectException(
                         _authenticatorInformationProvider.getAuthenticationBaseUri().toASCIIString());
             }
 
-            _logger.warn("Got an error from LinkedIn: {} - {}", requestModel.getError(), requestModel.getErrorDescription());
+            _logger.warn("Got an error from LinkedIn: {} - {}", requestModel.getError(), requestModel
+                    .getErrorDescription());
 
             throw _exceptionFactory.externalServiceException("Login with LinkedIn failed");
         }
     }
 
-    private static Map<String, String> createPostData(String clientId, String clientSecret, String code, String callbackUri)
+    private static Map<String, String> createPostData(String clientId, String clientSecret, String code, String
+            callbackUri)
     {
         Map<String, String> data = new HashMap<>(5);
 
@@ -237,7 +247,8 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         try
         {
             return URLEncoder.encode(unencodedString, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e)
+        }
+        catch (UnsupportedEncodingException e)
         {
             throw new RuntimeException("This server cannot support UTF-8!", e);
         }
@@ -250,7 +261,8 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         if (sessionAttribute != null && state.equals(sessionAttribute.getValueOfType(String.class)))
         {
             _logger.debug("State matches session");
-        } else
+        }
+        else
         {
             _logger.debug("State did not match session");
 
