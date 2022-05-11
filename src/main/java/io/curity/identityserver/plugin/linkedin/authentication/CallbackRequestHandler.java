@@ -42,6 +42,7 @@ import se.curity.identityserver.sdk.web.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -227,7 +228,7 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
 
         data.entrySet().forEach(e -> appendParameter(stringBuilder, e));
 
-        return HttpRequest.fromString(stringBuilder.toString());
+        return HttpRequest.fromString(stringBuilder.toString(), Charset.defaultCharset());
     }
 
     private static void appendParameter(StringBuilder stringBuilder, Map.Entry<String, String> entry)
