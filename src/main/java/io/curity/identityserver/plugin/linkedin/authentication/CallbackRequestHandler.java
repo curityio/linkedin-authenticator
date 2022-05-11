@@ -51,6 +51,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import static io.curity.identityserver.plugin.linkedin.authentication.RedirectUriUtil.createRedirectUri;
+
 public class CallbackRequestHandler implements AuthenticatorRequestHandler<CallbackGetRequestModel>
 {
     private final static Logger _logger = LoggerFactory.getLogger(CallbackRequestHandler.class);
@@ -145,12 +147,14 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
 
     private Map<String, Object> redeemCodeForTokens(CallbackGetRequestModel requestModel)
     {
+        HttpRequest.BodyProcessor body = getFormEncodedBodyFrom(createPostData(_config.getClientId(),
+                _config.getClientSecret(),
+                requestModel.getCode(), createRedirectUri(_authenticatorInformationProvider, _exceptionFactory)));
         HttpResponse tokenResponse = getWebServiceClient("www.linkedin.com")
                 .withPath("/oauth/v2/accessToken")
                 .request()
                 .contentType("application/x-www-form-urlencoded")
-                .body(getFormEncodedBodyFrom(createPostData(_config.getClientId(), _config.getClientSecret(),
-                        requestModel.getCode(), requestModel.getRequestUrl())))
+                .body(body)
                 .method("POST")
                 .response();
         int statusCode = tokenResponse.statusCode();
@@ -159,8 +163,8 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         {
             if (_logger.isInfoEnabled())
             {
-                _logger.info("Got error response from token endpoint: error = {}, {}", statusCode,
-                        tokenResponse.body(HttpResponse.asString()));
+                _logger.info("Got error response from token endpoint: error = {}, request = {}, {}", statusCode,
+                        body, tokenResponse.body(HttpResponse.asString()));
             }
 
             throw _exceptionFactory.internalServerException(ErrorCode.EXTERNAL_SERVICE_ERROR);
