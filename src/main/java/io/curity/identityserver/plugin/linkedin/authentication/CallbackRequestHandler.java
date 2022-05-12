@@ -227,7 +227,7 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
 
         data.entrySet().forEach(e -> appendParameter(stringBuilder, e));
 
-        return HttpRequest.fromString(stringBuilder.toString());
+        return HttpRequest.fromString(stringBuilder.toString(), StandardCharsets.UTF_8);
     }
 
     private static void appendParameter(StringBuilder stringBuilder, Map.Entry<String, String> entry)
